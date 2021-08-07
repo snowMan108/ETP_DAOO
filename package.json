@@ -1,0 +1,29 @@
+{
+    "name": "etp-sale-website",
+    "version": "1.0.0",
+    "description": "ETP Pre-sales",
+    "main": "truffle.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "dev": "lite-server"
+    },
+    "author": "Konstantin",
+    "license": "ISC",
+    "devDependencies": {
+        "lite-server": "^2.3.0"
+    },
+    "dependencies": {
+        "@truffle/hdwallet-provider": "^1.4.2",
+        "bignumber": "^1.1.0",
+        "jquery": "^3.6.0",
+        "jquery-migrate": "^3.3.2",
+        "solc": "^0.8.6",
+        "surge": "^0.23.0",
+        "truffle-contract": "^4.0.31",
+        "truffle-hdwallet-provider": "^1.0.17",
+        "web3": "^1.5.0",
+        "yarn": "^1.22.11"
+    }
+}
