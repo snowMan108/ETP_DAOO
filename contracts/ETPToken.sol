@@ -1,20 +1,16 @@
-/**
- *Submitted for verification at Etherscan.io on 2021-08-07
-*/
-
-pragma solidity ^0.8.0;
 //SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-contract ETPToken{
+contract ETPv2Token{
     
     string public name = "Educate The People";
     string public symbol = "ETP";
-    string public version = "ETP v1.0";
-    uint256 public feePercentage = 5*10**9;
-    uint256 public feeDivider = 100*10**9;
-    uint256 public decimals = 10**9; // 9 decimals
-    uint256 public totalSupply = 100000000*decimals ; //100 milllion 100000000
-    uint256 public maxFeeAmount = 50000*10**9;
+    string public version = "ETP v1.4";
+    uint256 public feePercentage = 5*10**18;
+    uint256 public feeDivider = 100*10**18;
+    uint256 public decimals = 18; // 18 decimals
+    uint256 public totalSupply = 100000000*10**decimals ; //100 milllion 100000000
+    uint256 public maxFeeAmount = 50000*10**18; 
     uint public totalFee;
     address public feeCollector;
     
@@ -47,7 +43,9 @@ contract ETPToken{
     
     // Fee calculator for every transcation 
     function feeCalculation(uint value) public view returns(uint){
-        uint feeDeduction = (value * feePercentage) / feeDivider;
+        uint value1 = value*10**18;
+        uint feeDeduct = (value1 * feePercentage) / feeDivider;
+        uint feeDeduction = feeDeduct/10**18;
         return feeDeduction;
     }
     
@@ -76,10 +74,9 @@ contract ETPToken{
     }
 
     //Required but not in use: 
-    function approve(address owner, address _spender, uint256 _value) public returns (bool succes){
-        require(owner != address(0), "ERC20: approve from the zero address");
+    function approve( address _spender, uint256 _value) public returns (bool succes){
         require(_spender != address(0), "ERC20: approve to the zero address");
-        allowance[owner][_spender] = _value;
+        allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
     }

@@ -611,15 +611,12 @@ contract Context {
         return msg.data;
     }
 }
-contract Crowdsale is Context, ReentrancyGuard {
+contract Sale is Context, ReentrancyGuard {
     using SafeMath for uint256;
     using SafeBEP20 for IBEP20;
 
     // The token being sold
     IBEP20 public token;
-
-    // BNB instance
-    // IBEP20 public BNBToken;
 
     // Address of the owner
     address public owner;
@@ -710,18 +707,18 @@ contract Crowdsale is Context, ReentrancyGuard {
         uint _weiAmount = msg.value;
         _preValidatePurchase(_beneficiary, _weiAmount);
         //_recieveBNBTokens(_beneficiary, _weiAmount);
-
+        
         // calculate token amount to be created
         uint256 tokens = _getTokenAmount(_weiAmount);
         tokenSold = tokens;
         // update state
         weiRaised = weiRaised.add(_weiAmount);
-
+        
         _processPurchase(_beneficiary, tokens);
         emit TokensPurchased(_msgSender(), _beneficiary, _weiAmount, tokens);
-
+        
         _updatePurchasingState(_beneficiary, _weiAmount);
-
+        
         _forwardFunds();
         _postValidatePurchase(_beneficiary, _weiAmount);
     }
@@ -734,7 +731,6 @@ contract Crowdsale is Context, ReentrancyGuard {
     function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal view {
         require(_beneficiary != address(0), "PreCrowdsale: beneficiary is the zero address");
         require(_weiAmount != 0, "PreCrowdsale: weiAmount is 0");
-        require(_weiAmount >= 1e18, "PreCrowdsale: weiAmount should be atleast 1 BNB");
         require(presaleEnded == false , "PreCrowdsale: presale Ended");
     }
 
